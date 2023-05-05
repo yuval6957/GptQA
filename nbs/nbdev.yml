@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "GptQA"
+  site-url: "https://yuval6957.github.io/GptQA"
+  description: "A Q/A framework using Open.AI tools - This is an educational Repo"
+  repo-branch: main
+  repo-url: "https://github.com/yuval6957/GptQA"
