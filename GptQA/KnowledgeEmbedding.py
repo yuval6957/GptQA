@@ -49,7 +49,7 @@ def text2data(path: str, extensions: Union[str, Set[str]] = {"txt"}, recursive: 
 
 
 
-# %% ../nbs/01_KnowledgeEmbedding.ipynb 7
+# %% ../nbs/01_KnowledgeEmbedding.ipynb 8
 def tokenize_and_split(text: str, tokenizer, max_tokens: int = 500, sentence_sep: str = '. ') -> List[list]:
     ''' 
     Function to encode the text and split the text into chunks of a maximum number of tokens 
@@ -76,7 +76,7 @@ def tokenize_and_split(text: str, tokenizer, max_tokens: int = 500, sentence_sep
 
         
 
-# %% ../nbs/01_KnowledgeEmbedding.ipynb 8
+# %% ../nbs/01_KnowledgeEmbedding.ipynb 9
 def tokenize_data(data: List[Dict[str, str]], tokenizer, max_tokens: int = 500, sentence_sep: str = '. ') -> List[Dict[str,  List[int]]]:
     ''' 
     Function taking a list of dicts of the form {'source': file_name , 'data':clean_text}
@@ -88,7 +88,7 @@ def tokenize_data(data: List[Dict[str, str]], tokenizer, max_tokens: int = 500, 
     return tokenized
 
 
-# %% ../nbs/01_KnowledgeEmbedding.ipynb 9
+# %% ../nbs/01_KnowledgeEmbedding.ipynb 10
 def embed_data(data: List[Dict[str, List[int]]], embedding_model: Callable[[List[int]], np.array]) -> List[dict]:
     '''
     This function takes a list of tokenized sentences. Each sentence is inside a dict of the form {'source': file_name , 'tokens':list of int}
@@ -99,7 +99,7 @@ def embed_data(data: List[Dict[str, List[int]]], embedding_model: Callable[[List
 
     
 
-# %% ../nbs/01_KnowledgeEmbedding.ipynb 10
+# %% ../nbs/01_KnowledgeEmbedding.ipynb 11
 def mean_pooling(model_output, attention_mask):
     '''
     Mean Pooling - Take attention mask into account for correct averaging
@@ -109,7 +109,7 @@ def mean_pooling(model_output, attention_mask):
     return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
 
 
-# %% ../nbs/01_KnowledgeEmbedding.ipynb 11
+# %% ../nbs/01_KnowledgeEmbedding.ipynb 12
 def run_embeddings(tokenized : List[int], model : Callable[[torch.Tensor, torch.Tensor], torch.Tensor]) -> np.array:
     '''
     Run the embedding model on one tokenized sentence
@@ -127,7 +127,7 @@ def run_embeddings(tokenized : List[int], model : Callable[[torch.Tensor, torch.
     return sentence_embeddings.squeeze().to('cpu').numpy()
 
 
-# %% ../nbs/01_KnowledgeEmbedding.ipynb 13
+# %% ../nbs/01_KnowledgeEmbedding.ipynb 14
 def cosine_similarity(a: np.array, b: np.array) -> float:
     '''
     Calculate the Cosine Similarity between 2 numpy vectors.
@@ -148,7 +148,7 @@ def cosine_similarity(a: np.array, b: np.array) -> float:
         
     return np.dot(a, b) / (norm_a * norm_b)
 
-# %% ../nbs/01_KnowledgeEmbedding.ipynb 14
+# %% ../nbs/01_KnowledgeEmbedding.ipynb 15
 def top_scores(question: str, embedded: List[dict], model : Callable, tokenizer : Callable, n: int = 5, same_th: float = 0.2):
     '''
     Return n top answers.
@@ -187,7 +187,7 @@ def top_scores(question: str, embedded: List[dict], model : Callable, tokenizer 
     return answers
 
 
-# %% ../nbs/01_KnowledgeEmbedding.ipynb 15
+# %% ../nbs/01_KnowledgeEmbedding.ipynb 16
 def create_context(question: str, embedded: List[dict], model : Callable, tokenizer: Callable, max_len: int = 1700, **kwargs) -> str:
     """
     Create a context for a question by finding the most similar context from the embedded data.
@@ -218,7 +218,7 @@ def create_context(question: str, embedded: List[dict], model : Callable, tokeni
     return context
 
 
-# %% ../nbs/01_KnowledgeEmbedding.ipynb 17
+# %% ../nbs/01_KnowledgeEmbedding.ipynb 18
 def answer_question(question: str, 
                     embedded: List[dict], 
                     context_model: Callable,
