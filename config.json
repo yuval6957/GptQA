@@ -1,0 +1,6 @@
+{
+    "path":{
+        "wandb": "/home/hd/GptQA/WANDB",
+        "outputs":"/home/hd/GptQA/outputs"  
+    }
+}
